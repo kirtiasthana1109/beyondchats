@@ -1,4 +1,3 @@
-// Article model and CRUD operations
 const mongoose = require("./db");
 
 const ArticleSchema = new
