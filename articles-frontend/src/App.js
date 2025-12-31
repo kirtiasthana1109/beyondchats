@@ -1,96 +1,241 @@
-import React, { useEffect, useState } from "react";
 
-function App() {
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
+// import React, { useEffect, useState } from "react";
+// import { API_BASE } from "./config";
 
-  useEffect(() => {
-    fetch("http://localhost:5000/articles")
-      .then((res) => res.json())
-      .then((data) => {
-        setArticles(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+// export default function ArticlesList({ onSelect }) {
 
-  const original = articles.filter(a => !a.title.includes("Updated Version"));
-  const updated = articles.filter(a => a.title.includes("Updated Version"));
+//   const [articles, setArticles] = useState([]);
 
-  if (loading) return <h2 style={{ textAlign:"center", marginTop:"40px" }}>Loading...</h2>;
+//   useEffect(() => {
+//     fetch(API_BASE)
+//       .then(res => res.json())
+//       .then(setArticles);
+//   }, []);
+
+//   return (
+//     <div style={{ padding: "40px 60px", background: "#020617", minHeight: "100vh" }}>
+
+//       <h1 style={{ color: "white", marginBottom: 25 }}>
+//         📚 <span style={{ color:"#38bdf8" }}>BeyondChats Articles</span>
+//       </h1>
+
+//       {/* GRID */}
+//       <div style={{
+//         display: "grid",
+//         gridTemplateColumns: "repeat(3, 1fr)",
+//         gap: 30
+//       }}>
+
+//         {articles.map(a => (
+//           <div key={a._id}
+//             style={{
+//               background: "#030712",
+//               borderRadius: 16,
+//               padding: 12,
+//               border: "1px solid #1f2937",
+//               boxShadow: "0 0 15px #000",
+//               transition: "0.3s",
+//             }}
+//             onMouseEnter={(e) => e.currentTarget.style.border = "1px solid #10b981"}
+//             onMouseLeave={(e) => e.currentTarget.style.border = "1px solid #1f2937"}
+//           >
+
+//             {/* IMAGE */}
+//             <img
+//               src={`https://source.unsplash.com/600x400/?technology,ai,${a.title}`}
+//               alt=""
+//               style={{
+//                 width: "100%",
+//                 height: 180,
+//                 objectFit: "cover",
+//                 borderRadius: 12
+//               }}
+//               onError={(e)=>e.target.src="https://source.unsplash.com/600x400/?technology,chatbot"}
+//             />
+
+//             {/* TITLE */}
+//             <h3 style={{
+//               color: "#fff",
+//               marginTop: 12,
+//               minHeight: 50,
+//               fontWeight: 600
+//             }}>
+//               {a.title.replace(" (Updated Version)", "")}
+//             </h3>
+
+//             {/* BUTTON */}
+//             <button
+//               onClick={() => onSelect(a._id)}
+//               style={{
+//                 marginTop: 10,
+//                 padding: "8px 14px",
+//                 borderRadius: 8,
+//                 background: "#22c55e",
+//                 color: "#012",
+//                 fontWeight: 600,
+//                 border: "none",
+//                 cursor: "pointer"
+//               }}>
+//               Read Article →
+//             </button>
+
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+
+
+
+// import React, { useEffect, useState } from "react";
+// import { API_BASE } from "./config";
+
+// export default function ArticlesList({ onSelect }) {
+
+
+//   const getImageKeyword = (title) => {
+//   const t = title.toLowerCase();
+
+//   if (t.includes("chatbots magic")) 
+//     return "chatbot,ai,robot,technology";
+
+//   if (t.includes("small business")) 
+//     return "small business,store,entrepreneur,startup,office";
+
+//   if (t.includes("lead generation")) 
+//     return "digital marketing,leads,analytics,growth,graph";
+
+//   if (t.includes("virtual assistant")) 
+//     return "virtual assistant,remote work,workspace,laptop";
+
+//   if (t.includes("customer interaction")) 
+//     return "customer support,communication,chat,people,talking";
+
+//   return "technology,ai"; // fallback
+// };
+
+  
+//   const [articles, setArticles] = useState([]);
+
+//   useEffect(() => {
+//     fetch(API_BASE)
+//       .then(res => res.json())
+//       .then(setArticles)
+//       .catch(err => console.log("API error =", err));
+//   }, []);
+
+//   // ❗ Show ONLY original articles
+//   const originals = articles.filter(a => !a.isUpdatedVersion);
+
+//   return (
+    
+//     <div style={{ padding: "40px 60px", background: "#020617", minHeight: "100vh" }}>
+
+//       <h1 style={{ color: "white", marginBottom: 25 }}>
+//         📚 <span style={{ color:"#38bdf8" }}>BeyondChats Articles</span>
+//       </h1>
+
+//       <div style={{
+//         display: "grid",
+//         gridTemplateColumns: "repeat(3, 1fr)",
+//         gap: 30
+//       }}>
+
+//         {originals.map(a => (
+//           <div key={a._id}
+//             style={{
+//               background: "#030712",
+//               borderRadius: 16,
+//               padding: 12,
+//               border: "1px solid #1f2937",
+//               transition: "0.3s",
+//             }}
+//           >
+
+
+
+// <img
+//   src={`https://source.unsplash.com/600x400/?${getImageKeyword(a.title)}`}
+//   alt={a.title}
+//   style={{
+//     width: "100%",
+//     height: 180,
+//     objectFit: "cover",
+//     borderRadius: 12
+//   }}
+//   onError={(e) =>
+//     e.target.src = "https://picsum.photos/600/400?random=" + a._id
+//   }
+// />
+
+
+
+//             <h3 style={{ color: "#fff", marginTop: 12, minHeight: 50 }}>
+//               {a.title.replace(" (Updated Version)", "")}
+//             </h3>
+
+//             <button
+//               onClick={() => onSelect(a._id)}
+//               style={{
+//                 marginTop: 10,
+//                 padding: "8px 14px",
+//                 borderRadius: 8,
+//                 background: "#22c55e",
+//                 border: "none",
+//                 cursor: "pointer"
+//               }}>
+//               Read Article →
+//             </button>
+
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+// import React, { useState } from "react";
+// import ArticlesList from "./ArticlesList";
+// import ArticleView from "./ArticleView";
+
+// export default function App() {
+
+//   const [selectedId, setSelectedId] = useState(null);
+
+//   return (
+//     <>
+//       <ArticlesList onSelect={setSelectedId} />
+
+//       {selectedId && (
+//         <ArticleView
+//           id={selectedId}
+//           onClose={() => setSelectedId(null)}
+//         />
+//       )}
+//     </>
+//   );
+// }
+
+import React, { useState } from "react";
+import ArticlesList from "./ArticlesList";
+import ArticleView from "./ArticleView";
+
+export default function App() {
+
+  const [selectedId, setSelectedId] = useState(null);
 
   return (
-    <div style={{
-      maxWidth:"900px",
-      margin:"20px auto",
-      padding:"20px",
-      fontFamily:"Arial"
-    }}>
+    <>
+      <ArticlesList onSelect={setSelectedId} />
 
-      <h1 style={{ textAlign:"center", marginBottom:"20px" }}>
-        📰 BeyondChats Articles
-      </h1>
-
-      {/* ORIGINAL ARTICLES */}
-      <h2 style={{ marginTop:"10px" }}>📌 Original Articles</h2>
-      <hr />
-
-      {original.map(a => (
-        <div
-          key={a._id}
-          style={{
-            marginTop:"14px",
-            padding:"14px",
-            borderRadius:"10px",
-            border:"1px solid #ddd",
-            background:"#ffffff",
-            boxShadow:"0 2px 8px rgba(0,0,0,0.05)"
-          }}
-        >
-          <h3>{a.title}</h3>
-
-          {a.link && (
-            <p>
-              <a href={a.link} target="_blank" rel="noreferrer">
-                Read Original Article 🔗
-              </a>
-            </p>
-          )}
-        </div>
-      ))}
-
-      {/* UPDATED ARTICLES */}
-      <h2 style={{ marginTop:"25px" }}>✨ AI Updated Versions</h2>
-      <hr />
-
-      {updated.map(a => (
-        <div
-          key={a._id}
-          style={{
-            marginTop:"14px",
-            padding:"14px",
-            borderRadius:"10px",
-            border:"1px solid #b8c7ff",
-            background:"#f2f5ff",
-            boxShadow:"0 2px 10px rgba(0,0,0,0.05)"
-          }}
-        >
-          <h3>{a.title}</h3>
-
-          <span style={{
-            padding:"4px 8px",
-            background:"#dde6ff",
-            color:"#0033aa",
-            borderRadius:"6px",
-            fontSize:"12px"
-          }}>
-            Updated Article
-          </span>
-        </div>
-      ))}
-
-    </div>
+      {selectedId && (
+        <ArticleView
+          id={selectedId}
+          onClose={() => setSelectedId(null)}
+        />
+      )}
+    </>
   );
 }
-
-export default App;

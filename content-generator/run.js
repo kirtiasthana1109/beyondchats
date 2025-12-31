@@ -1,42 +1,58 @@
+
+
 require("dotenv").config();
 
 const { getArticles, publishArticle } = require("./apiClient");
 const generateNewArticle = require("./generateArticle");
 
 (async () => {
-  console.log(" Phase-2 Script Started\n");
+
+  console.log("🚀 Phase-2 Started\n");
 
   const articles = await getArticles();
 
   for (let art of articles) {
 
-    console.log("\n Processing Article:", art.title);
+    console.log("\n📝 Processing:", art.title);
 
-    const newArt = await generateNewArticle(art.title);
-
-    if (!newArt) {
-      console.log(" Skipped (no rewritten content)\n");
+    // ❌ Skip if already updated
+    if (art.isUpdatedVersion) {
+      console.log("⏩ Skipping (already updated)");
       continue;
     }
 
-    
+    const newArt = await generateNewArticle(art.title);
+
+    // ❌ Skip if AI failed or content is empty
+    if (!newArt || !newArt.content) {
+      console.log("⚠️ Skipped — No AI content generated\n");
+      continue;
+    }
+
+    // Append references
     newArt.content += `
 
-  References:
+References:
 1️⃣ ${newArt.source1}
 2️⃣ ${newArt.source2}
 `;
 
-    const finalPayload = {
+    const payload = {
       title: art.title + " (Updated Version)",
+      link: art.link || "",
       content: newArt.content,
-      references: [newArt.source1, newArt.source2]
+      isUpdatedVersion: true
     };
 
-    await publishArticle(finalPayload);
+    await publishArticle(payload);
 
-    console.log("Published Successfully:", finalPayload.title);
+    console.log("✅ Saved:", payload.title);
+
+    // 🕒 Avoid rate limit
+    await new Promise(r => setTimeout(r, 4000));
   }
 
-  console.log("\n Phase-2 Completed Successfully");
+  console.log("\n🎯 Phase-2 Completed");
+
 })();
+
