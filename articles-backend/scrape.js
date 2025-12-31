@@ -1,6 +1,21 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
 const Article = require("../Article");
+async function scrapeArticleContent(url) {
+  const { data } = await axios.get(url);
+  const $ = cheerio.load(data);
+
+  let content = "";
+
+  $("article p").each((i, el) => {
+    const text = $(el).text().trim();
+    if (text.length > 30) {
+      content += text + "\n\n";
+    }
+  });
+
+  return content.trim();
+}
 
 async function scrapePage(url) {
 

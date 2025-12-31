@@ -1,80 +1,7 @@
-// import React, { useEffect, useState } from "react";
-// import { API_BASE } from "./config";
-
-// export default function ArticleView({ id, onClose }) {
-
-//   const [article, setArticle] = useState(null);
-
-//   useEffect(() => {
-//     if (!id) return;
-
-//     fetch(`${API_BASE}/articles/${id}`)
-//       .then(res => res.json())
-//       .then(setArticle)
-//       .catch(err => console.log("Error loading article =", err));
-//   }, [id]);
-
-//   if (!article) return null;
-
-//   return (
-//     <div style={{
-//       position: "fixed",
-//       inset: 0,
-//       background: "rgba(0,0,0,0.75)",
-//       display: "flex",
-//       alignItems: "center",
-//       justifyContent: "center",
-//       zIndex: 999
-//     }}>
-
-//       <div style={{
-//         background: "#020617",
-//         padding: 20,
-//         borderRadius: 14,
-//         width: "70%",
-//         maxHeight: "90vh",
-//         overflowY: "auto",
-//         color: "white"
-//       }}>
-
-//         <button
-//           onClick={onClose}
-//           style={{
-//             float: "right",
-//             background: "#ef4444",
-//             border: "none",
-//             padding: "6px 10px",
-//             borderRadius: 6,
-//             cursor: "pointer"
-//           }}
-//         >
-//           ✖
-//         </button>
-
-//         <h2>{article.title}</h2>
-//         <hr />
-
-//         <h3>Original Article</h3>
-//         <p>{article?.original?.content || "No original content available"}</p>
-
-//         <hr />
-
-//         <h3>AI Enhanced Version</h3>
-//         {article?.updated?.content ? (
-//           <p>{article.updated.content}</p>
-//         ) : (
-//           <p style={{ color: "yellow" }}>⚠ No AI-updated version available</p>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
-
 import React, { useEffect, useState } from "react";
 import { API_BASE } from "./config";
 
 export default function ArticleView({ id, onClose }) {
-
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -89,46 +16,107 @@ export default function ArticleView({ id, onClose }) {
   if (!data) return null;
 
   return (
-    <div style={{
-      position: "fixed",
-      inset: 0,
-      background: "rgba(0,0,0,.7)",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center"
-    }}>
-      
-      <div style={{
-        width: "90%",
-        height: "90%",
-        background: "#030712",
-        padding: 20,
-        overflow: "auto",
-        borderRadius: 12
-      }}>
-
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "rgba(0,0,0,.7)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 1000
+      }}
+    >
+      <div
+        style={{
+          width: "90%",
+          height: "90%",
+          background: "#030712",
+          padding: 20,
+          borderRadius: 12,
+          display: "flex",
+          flexDirection: "column"
+        }}
+      >
+        {/* Close Button */}
         <button
           onClick={onClose}
-          style={{ float: "right", background: "#ef4444", padding: "5px 12px", border: 0 }}
+          style={{
+            alignSelf: "flex-end",
+            background: "#ef4444",
+            color: "white",
+            padding: "6px 12px",
+            border: 0,
+            borderRadius: 6,
+            cursor: "pointer"
+          }}
         >
           ❌ Close
         </button>
 
-        <h2 style={{ color: "white" }}>{data.title}</h2>
+        {/* Title */}
+        <h2 style={{ color: "white", marginBottom: 12 }}>
+          {data.title}
+        </h2>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+        {/* CONTENT GRID */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 20,
+            flex: 1,
+            overflow: "hidden"
+          }}
+        >
+{/* LEFT: Original Article */}
+<div
+  style={{
+    border: "1px solid #374151",
+    borderRadius: 8,
+    padding: 20,
+    color: "#e5e7eb",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
+  }}
+>
+  <h3>Original Article</h3>
 
-          {/* Original */}
-          <div style={{ color: "#e5e7eb" }}>
-            <h3>Original Article</h3>
+  <p style={{ opacity: 0.8, textAlign: "center" }}>
+    This article cannot be displayed here due to website restrictions.
+  </p>
 
-            <a href={data.link} target="_blank" rel="noreferrer">
-              Open Source ↗
-            </a>
-          </div>
+  <a
+    href={data.link}
+    target="_blank"
+    rel="noreferrer"
+    style={{
+      marginTop: 12,
+      padding: "10px 16px",
+      background: "#22c55e",
+      color: "#000",
+      borderRadius: 6,
+      textDecoration: "none",
+      fontWeight: 600
+    }}
+  >
+    Open Original Article ↗
+  </a>
+</div>
 
-          {/* AI Enhanced */}
-          <div style={{ color: "#e5e7eb" }}>
+
+          {/* RIGHT: AI Enhanced Version */}
+          <div
+            style={{
+              border: "1px solid #374151",
+              borderRadius: 8,
+              padding: 10,
+              overflow: "auto",
+              color: "#e5e7eb"
+            }}
+          >
             <h3>AI Enhanced Version</h3>
 
             {data.updated?.content ? (
@@ -139,7 +127,6 @@ export default function ArticleView({ id, onClose }) {
               <p>⚠️ No AI-updated content found</p>
             )}
           </div>
-
         </div>
       </div>
     </div>
