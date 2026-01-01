@@ -12,9 +12,9 @@ Displays original & updated articles in a React UI
 This project implements all three phases of the BeyondChats technical assignment, covering web scraping, backend APIs, AI-powered rewriting, and a full React UI to display original and AI-enhanced articles.
 ## 📸 Output Screenshots
 
-![Screenshot 1](Screenshot%202025-12-31%20232959.png)
-
 ![Screenshot 2](Screenshot%202025-12-31%20234159.png)
+
+![Screenshot 1](Screenshot%202025-12-31%20232959.png)
 
 ![Screenshot 3](Screenshot%202025-12-31%20234550.png)
 
